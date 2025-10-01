@@ -1,0 +1,61 @@
+import java.util.*;
+
+class EmptyListException extends Exception 
+{
+    public EmptyListException(String msg) 
+    {
+        super(msg);
+    }
+}
+
+public class StudentMenu 
+{
+    public static void main(String[] args) 
+    {
+        ArrayList<String> students = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
+
+        while (true) 
+        {
+            System.out.println("\n--- Student Menu ---");
+            System.out.println("1. Add Student");
+            System.out.println("2. Remove Student");
+            System.out.println("3. Display Students");
+            System.out.println("4. Exit");
+            System.out.print("Enter choice: ");
+            int ch = sc.nextInt();
+            sc.nextLine(); 
+
+            try {
+                switch (ch) {
+                    case 1 -> {
+                        System.out.print("Enter name: ");
+                        String name = sc.nextLine();
+                        students.add(name);
+                        System.out.println("Added: " + name);
+                    }
+                    case 2 -> {
+                        System.out.print("Enter name to remove: ");
+                        String name = sc.nextLine();
+                        if (students.remove(name)) {
+                            System.out.println("Removed: " + name);
+                        } else {
+                            System.out.println("Not found!");
+                        }
+                    }
+                    case 3 -> {
+                        if (students.isEmpty()) throw new EmptyListException("Student list is empty!");
+                        Collections.sort(students);
+                        System.out.println("Students: " + students);
+                    }
+                    case 4 -> System.exit(0);
+                    default -> System.out.println("Invalid choice!");
+                }
+            } 
+            catch (EmptyListException e) 
+            {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+    }
+}
